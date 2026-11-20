@@ -1,0 +1,39 @@
+# Cursor Rules — Fotobots Whitelabel
+
+All AI coding agents in Cursor must strictly adhere to repository guidelines in `AGENTS.md`.
+
+## CRITICAL: MANDATORY SKILL LOADING BEFORE ANY ACTION
+Before performing ANY development task, implementation, code review, planning, or ClickUp integration, you MUST check and READ the relevant `SKILL.md` file FIRST.
+NEVER improvise, guess, or bypass the protocols in SKILL.md.
+
+### Skill Dispatch Table:
+1. **Development, Features, Bugs, Refactoring, Task Cards, or TDD:**
+   - MUST READ: `.agents/skills/start-task/SKILL.md` AND `.agents/skills/worker-task-execution/SKILL.md`
+   - MUST execute strict 2-Phase TDD: Phase 1 (RED) failing tests + Draft PR -> STOP & WAIT -> Phase 2 (GREEN).
+   - ONLY modify files in Owned Paths.
+2. **Code Review / PR Review:**
+   - MUST READ: `~/.gemini/config/skills/pr-production-review/SKILL.md`
+3. **Architecture Planning / Task Decomposition:**
+   - MUST READ: `~/.gemini/config/skills/production-architecture-planning/SKILL.md`
+4. **ClickUp Plan Review (Tech Lead Gate):**
+   - MUST READ: `~/.gemini/config/skills/clickup-plan-review/SKILL.md`
+5. **ClickUp Task Automation / Comments / Status:**
+   - MUST READ: `~/.gemini/config/skills/clickup-task-automation/SKILL.md`
+6. **Team Communication (Slack, LINE, Dev messages):**
+   - MUST READ: `~/.gemini/config/skills/natural-team-communication/SKILL.md`
+
+## Universal Start Task Command
+
+Supports Flexible Dual-Mode:
+- **Simplified Mode (1 ID):** `เริ่มงาน <CLICKUP-ID>` (e.g. `เริ่มงาน DEV-123`) or `/start-task <CLICKUP-ID>`
+- **Explicit Mode (2 IDs):** `เริ่มงาน <TASK-ID> <CLICKUP-ID>` (e.g. `เริ่มงาน TASK-001 DEV-123`) or `/start-task <TASK-ID> <CLICKUP-ID>`
+
+Immediately execute the 22-step protocol defined in `.agents/skills/start-task/SKILL.md`:
+1. If 1 ID given: look up task in ClickUp; auto-resolve `TASK-ID` if mentioned in title/spec; otherwise use `CLICKUP-ID` as sole ID.
+2. Read the Task Card or execution spec in `Implementation/`.
+3. Check task readiness (status `ready` approved by Tech Lead).
+4. Create branch `feat/<CLICKUP-ID>-<short-description>` (or `feat/<TASK-ID>-<CLICKUP-ID>-<short-description>`) from latest `develop`.
+5. Strictly adhere to Owned Paths and Must Not Modify.
+6. Phase 1 (RED): write failing tests, commit with `ClickUp-Task: <CLICKUP-ID>`, push to fork, open Draft PR into `develop`.
+7. STOP and wait for developer confirmation before writing production code (Phase 2 GREEN).
+8. Verify with `pnpm test` before finalizing PR.

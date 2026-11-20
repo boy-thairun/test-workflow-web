@@ -1,0 +1,80 @@
+name: ClickUp status sync
+
+# Required repository secret: CLICKUP_API_TOKEN
+# Default scope matches .clickup-workflow.toml: Workspace 90182419955, List 1100690000004796 (fotobots-whitelabel).
+# Put one task ID in the branch (feat/<CARD-ID>-DEV-4346-description) or PR body
+# (ClickUp-Task: DEV-4346). Repository variables can override the defaults below.
+# Team flow: fork -> PR into develop -> lead merges; develop -> staging -> main is
+# promoted by hand, and promotion PRs are not synced.
+
+on:
+  push:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft, closed]
+  pull_request_review:
+    types: [submitted, dismissed]
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      task_id:
+        description: ClickUp task ID, for example DEV-4346
+        required: true
+        type: string
+      status:
+        description: Target ClickUp status
+        required: true
+        type: choice
+        options:
+          - backlog
+          - ready
+          - in progress
+          - in review
+          - ready to merge
+          - testing
+          - qa test
+          - ready to release
+          - blocked
+          - cancel
+          - done
+      note:
+        description: Evidence or reason for the manual update
+        required: true
+        type: string
+      dry_run:
+        description: Preview without changing ClickUp
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clickup-status-${{ github.repository }}-${{ github.event.pull_request.number || github.ref || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync delivery state to ClickUp
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      CLICKUP_API_TOKEN: ${{ secrets.CLICKUP_API_TOKEN }}
+      CLICKUP_WORKSPACE_ID: ${{ vars.CLICKUP_WORKSPACE_ID || '90182419955' }}
+      CLICKUP_ALLOWED_LIST_IDS: ${{ vars.CLICKUP_ALLOWED_LIST_IDS || '1100690000001100,1100690000004796' }}
+      CLICKUP_TASK_ID_PATTERN: ${{ vars.CLICKUP_TASK_ID_PATTERN || '[A-Z][A-Z0-9]+-[0-9]+' }}
+      CLICKUP_INTEGRATION_BRANCHES: ${{ vars.CLICKUP_INTEGRATION_BRANCHES || 'develop,staging,stg,main' }}
+      CLICKUP_SYNC_DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+
+    steps:
+      - name: Check out trusted workflow code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: Validate sync script
+        run: node --check .github/scripts/clickup-status-sync.cjs
+
+      - name: Sync ClickUp task
+        run: node .github/scripts/clickup-status-sync.cjs

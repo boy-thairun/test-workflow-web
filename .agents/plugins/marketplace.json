@@ -1,0 +1,20 @@
+{
+  "name": "thairun-team",
+  "interface": {
+    "displayName": "Thairun Team"
+  },
+  "plugins": [
+    {
+      "name": "thairun-delivery-workflow",
+      "source": {
+        "source": "local",
+        "path": "./plugins/thairun-delivery-workflow"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

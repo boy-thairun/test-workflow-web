@@ -1,0 +1,28 @@
+# ClickUp configuration for test-workflow-web
+version = 1
+default_project = "test-workflow-web"
+
+[projects.test-workflow-web]
+display_name = "test-workflow-web"
+workspace_id = "90182419955"
+space_id = "90189696376"
+space_name = "ThaiRun Dev"
+list_id = "1100690000001100"
+list_name = "test-workflowe-agent"
+list_url = "https://app.clickup.com/90182419955/v/l/li/1100690000001100"
+task_prefix = "DEV"
+sandbox = false
+git_sync_owner = "github_actions"
+
+[projects.test-workflow-web.statuses]
+backlog = "backlog"
+ready = "ready"
+in_progress = "in progress"
+code_review = "in review"
+ready_to_merge = "ready to merge"
+testing = "testing"
+qa = "qa test"
+ready_to_release = "ready to release"
+blocked = "blocked"
+canceled = "cancel"
+done = "done"
