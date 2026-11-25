@@ -17,11 +17,11 @@
 
 ## Task Cards
 
-Paths และแต้มเป็นข้อเสนอ ให้กำหนดคำสั่ง test, lint, typecheck และ browser test ใน AUTH-020 ก่อนเริ่มการ์ด UI อื่น
+AUTH-020 กำหนดสคริปต์ใน `package.json` ให้ `test` รัน `vitest run`, `lint` รัน `eslint .`, `typecheck` รัน `tsc --noEmit`, `test:e2e` รัน `playwright test` และใช้ `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm test:e2e` ตรวจงาน
 
 | การ์ด | ทำหลัง | Owned Paths | Acceptance Criteria |
 |---|---|---|---|
-| AUTH-020 ล็อกอินและเปิดพื้นที่สาธารณะ · Feature · 5 แต้ม | CONTRACT-010 Frozen | ไฟล์ตั้งค่าโปรเจกต์, `src/app/**`, `src/auth/**`, `tests/auth/**` | หลังล็อกอินไปแมพสาธารณะอัตโนมัติ ตรวจเซสชันตอนเปิด URL ตรงหรือรีเฟรช และออกจากระบบได้ |
+| AUTH-020 ล็อกอินและเปิดพื้นที่สาธารณะ · Feature · 5 แต้ม | CONTRACT-010 Frozen | `src/app/**`, `src/auth/**`, `tests/auth/**`, `tests/e2e/auth.spec.ts`, `index.html`, `package.json`, `pnpm-lock.yaml`, `tsconfig.json`, `vite.config.ts`, `vitest.config.ts`, `playwright.config.ts`, `eslint.config.mjs` | หลังล็อกอินไปแมพสาธารณะอัตโนมัติ ตรวจเซสชันตอนเปิด URL ตรงหรือรีเฟรช และออกจากระบบได้ |
 | MAP-010 วาดแผนที่และรับคำสั่งเดิน · Feature · 5 แต้ม | AUTH-020, CONTRACT-010 | `src/map/**`, `src/assets/room/**`, `tests/map/**` | วาดแมพ ผู้เล่น และเฟอร์นิเจอร์จากสถานะล่าสุด พร้อมส่งทิศทางตามปุ่มและหยุดส่งการเดินเมื่อเสียโฟกัส |
 | LIVE-020 เข้าพื้นที่กลางและซิงก์ผู้เล่น · Feature · 5 แต้ม | MAP-010, CONTRACT-010 | `src/live/**`, `tests/live/**` | เชื่อมอัตโนมัติหลังล็อกอิน เห็นผู้เล่นเข้า เดิน และออก รับผัง revision ใหม่ และโหลดสถานะล่าสุดเมื่อ reconnect |
 | ROOM-020 แก้ผังพื้นที่กลางด้วยสิทธิ์แอดมิน · Feature · 5 แต้ม | LIVE-020, CONTRACT-010 | `src/room-editor/**`, `src/assets/furniture/**`, `tests/room-editor/**` | แสดงโหมดแก้ผังให้แอดมิน ตรวจตำแหน่งและบันทึกด้วย revision ทุกคนเห็นผังใหม่หลังบันทึก และร่างยังอยู่เมื่อบันทึกล้มเหลว |
@@ -29,6 +29,8 @@ Paths และแต้มเป็นข้อเสนอ ให้กำห�
 **Must Not Modify** จำกัดการแก้ไฟล์ตาม Owned Paths ของการ์ด โดยใช้จุดเชื่อมที่การ์ดก่อนหน้าเตรียมไว้ `.github/`, `.agents/`, `.clickup-workflow.toml` และสเปกเกมวิ่งเดิมอยู่นอกขอบเขต
 
 ### การ์ด ClickUp
+
+เปิด PR แผนจาก fork เข้า `develop` ของ upstream และอ้างลิงก์ในรายละเอียดการ์ด ช่อง `PR Link` ใช้กับ Draft PR สำหรับ RED ของการ์ดแต่ละใบหลังได้รับอนุมัติเป็น `ready`
 
 | Task Card | ClickUp |
 |---|---|
