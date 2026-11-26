@@ -43,13 +43,21 @@ function integrationBranches(payload, env = process.env) {
   );
 }
 
+const TRUSTED_FORK_OWNERS = new Set(['namasawee123', 'boy-thairun']);
+
 // Only people with access to a private repository can fork it, so fork PRs there come from the
-// team. Forks of a public repository stay untrusted. The workflow never runs PR code either way.
+// team. Forks of a public repository stay untrusted unless the fork owner is explicitly trusted.
 function isUntrustedFork(payload, pullRequest) {
   const headRepository = pullRequest.head?.repo?.full_name;
   const baseRepository = payload.repository?.full_name;
   const isFork = Boolean(headRepository && baseRepository && headRepository !== baseRepository);
-  return isFork && payload.repository?.private !== true;
+  if (!isFork || payload.repository?.private === true) {
+    return false;
+  }
+  const headOwner = String(
+    pullRequest.head?.repo?.owner?.login || headRepository?.split('/')[0] || '',
+  ).toLowerCase();
+  return !TRUSTED_FORK_OWNERS.has(headOwner);
 }
 
 function taskIdRegex(pattern = DEFAULT_TASK_ID_PATTERN) {
