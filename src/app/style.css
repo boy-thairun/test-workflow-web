@@ -1,0 +1,57 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #172720;
+  background: #f2f4eb;
+  font-synthesis: none;
+  --surface: #f8f9f0;
+  --text: #172720;
+  --muted: #516358;
+  --dark: #12231e;
+  --accent: #c3eb77;
+  --border: #cdd7c9;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+h1, p { margin: 0; }
+h1 { font-size: clamp(2.1rem, 6vw, 3.25rem); line-height: 1.15; letter-spacing: -.045em; }
+.muted { color: var(--muted); line-height: 1.65; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: wait; opacity: .65; }
+button:focus-visible, input:focus-visible { outline: 3px solid #688b2c; outline-offset: 3px; }
+.brand { display: inline-flex; align-items: center; gap: .7rem; font-weight: 770; letter-spacing: -.035em; white-space: nowrap; }
+.brand-mark { width: 26px; height: 26px; border-radius: 7px; background: var(--dark); position: relative; }
+.brand-mark::after { content: ''; position: absolute; inset: 7px; background: var(--accent); border-radius: 2px; transform: rotate(-12deg); }
+.login { min-height: 100svh; display: grid; grid-template-columns: minmax(22rem, .85fr) 1.15fr; }
+.login-panel { background: var(--surface); padding: clamp(1.6rem, 5vw, 4.5rem); display: grid; align-content: start; grid-template-rows: auto 1fr; }
+.login-body { width: min(100%, 25rem); align-self: center; margin: 5rem auto; }
+.login-body h1 { margin-block-end: .7rem; }
+.login-form { display: grid; gap: .7rem; margin-block-start: 2rem; }
+.login-form label { font-size: .9rem; font-weight: 650; }
+.login-form input { height: 3.25rem; padding: 0 .9rem; border: 1px solid var(--border); border-radius: .55rem; color: var(--text); background: white; }
+.login-form input + label { margin-top: .5rem; }
+.login-form button { margin-top: .75rem; display: flex; justify-content: space-between; align-items: center; padding: .9rem 1rem; color: var(--accent); background: var(--dark); border: 0; border-radius: .55rem; font-weight: 700; }
+.login-form button:hover { background: #264437; }
+.feedback { color: #a73224; font-size: .9rem; line-height: 1.55; }
+.showcase { display: grid; place-items: center; padding: clamp(1.5rem, 5vw, 5rem); overflow: hidden; background: radial-gradient(ellipse at 50% 42%, #365342 0%, var(--dark) 72%); }
+.showcase-map { width: min(100%, 33rem); transform: rotate(-10deg); padding: 1.2rem; border: 1px solid #667f6c; border-radius: 1.3rem; background: #1b3228; box-shadow: 0 2.1rem 4rem #0b1813; }
+.map { display: grid; grid-template-columns: repeat(var(--columns), minmax(0, 1fr)); grid-template-rows: repeat(var(--rows), minmax(0, 1fr)); aspect-ratio: var(--columns) / var(--rows); gap: 2px; padding: .4rem; background: #365243; border-radius: .5rem; }
+.tile { display: grid; place-items: center; border-radius: .15rem; background: #75937b; }
+.tile:nth-child(2n) { background: #809e84; }
+.tile.tile--obstacle { background: #294638; box-shadow: inset 0 -3px #142921; }
+.tile--spawn::before { content: ''; width: 60%; aspect-ratio: 1; border-radius: 35%; background: var(--accent); border: 2px solid #486428; box-shadow: 0 3px #40582b; }
+.room-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem clamp(1rem, 4vw, 3rem); border-bottom: 1px solid var(--border); background: var(--surface); }
+.account { display: flex; gap: .85rem; align-items: center; }
+.secondary { white-space: nowrap; background: transparent; border: 1px solid var(--border); color: var(--text); border-radius: .55rem; padding: .55rem .8rem; }
+.secondary:hover { background: #e5ecd8; }
+.room { width: min(49rem, 100%); margin-inline: auto; padding: clamp(1.1rem, 5vw, 3.5rem); }
+.room-title { margin-bottom: 1.5rem; }
+.room-title h1 { margin-bottom: .55rem; }
+.room-map { padding: .75rem; background: var(--dark); border-radius: .9rem; margin-bottom: 1rem; }
+.loading { display: grid; min-height: 100svh; place-items: center; }
+@media (max-width: 740px) {
+  .login { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .login-body { margin-block: 3.5rem; }
+  .showcase { display: none; }
+}
+@media (max-width: 390px) { .account-name { display: none; } }

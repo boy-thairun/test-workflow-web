@@ -17,11 +17,17 @@
 
 ## Task Cards
 
+### สถานะงานจากการทดสอบในเครื่อง
+
+- AUTH-020 ใช้ `@test-workflow/virtual-room-contracts@1.0.0` จาก API revision ที่ merge แล้วผ่าน tarball ที่เก็บใน `src/auth/contracts/` และรัน Playwright สำหรับล็อกอิน รีเฟรช เปิดลิงก์ตรง และออกจากระบบด้วย fixtures จากแพ็กเกจเดียวกัน มีการทดสอบ flow กับ API จริงบน localhost แล้ว
+- MAP-010 ตัวละครแบบ 2.5D เดินด้วย WASD หรือปุ่มลูกศรและชนขอบกับสิ่งกีดขวางในเบราว์เซอร์แล้ว การ์ดนี้ยังต้องตรวจการวาดผู้เล่นหลายคนจาก snapshot และจุดเชื่อมสำหรับส่งทิศทางให้ LIVE-020
+- ROOM-020 ทดลองลาก วาง ย้าย และลบเฟอร์นิเจอร์ด้วยผังที่บันทึกในเบราว์เซอร์ ฟีเจอร์ร่วมยังต้องต่อสิทธิ์แอดมินและ API revision ของ ROOM-010 รวมถึงทดสอบการซิงก์และข้อขัดแย้งผ่าน LIVE-020
+
 AUTH-020 กำหนดสคริปต์ใน `package.json` ให้ `test` รัน `vitest run`, `lint` รัน `eslint .`, `typecheck` รัน `tsc --noEmit`, `test:e2e` รัน `playwright test` และใช้ `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm test:e2e` ตรวจงาน
 
 | การ์ด | ทำหลัง | Owned Paths | Acceptance Criteria |
 |---|---|---|---|
-| AUTH-020 ล็อกอินและเปิดพื้นที่สาธารณะ · Feature · 5 แต้ม | CONTRACT-010 Frozen | `src/app/**`, `src/auth/**`, `tests/auth/**`, `tests/e2e/auth.spec.ts`, `index.html`, `package.json`, `pnpm-lock.yaml`, `tsconfig.json`, `vite.config.ts`, `vitest.config.ts`, `playwright.config.ts`, `eslint.config.mjs` | หลังล็อกอินไปแมพสาธารณะอัตโนมัติ ตรวจเซสชันตอนเปิด URL ตรงหรือรีเฟรช และออกจากระบบได้ |
+| AUTH-020 ล็อกอินและเปิดพื้นที่สาธารณะ · Feature · 5 แต้ม | CONTRACT-010 Frozen | `src/app/**`, `src/auth/**`, `tests/auth/**`, `tests/e2e/auth.spec.ts`, `index.html`, `package.json`, `pnpm-lock.yaml`, `tsconfig.json`, `vite.config.ts`, `vitest.config.ts`, `playwright.config.ts`, `eslint.config.mjs`, `.github/workflows/verify-web.yml` | หลังล็อกอินไปแมพสาธารณะอัตโนมัติ ตรวจเซสชันตอนเปิด URL ตรงหรือรีเฟรช และออกจากระบบได้ |
 | MAP-010 วาดแผนที่และรับคำสั่งเดิน · Feature · 5 แต้ม | AUTH-020, CONTRACT-010 | `src/map/**`, `src/assets/room/**`, `tests/map/**` | วาดแมพ ผู้เล่น และเฟอร์นิเจอร์จากสถานะล่าสุด พร้อมส่งทิศทางตามปุ่มและหยุดส่งการเดินเมื่อเสียโฟกัส |
 | LIVE-020 เข้าพื้นที่กลางและซิงก์ผู้เล่น · Feature · 5 แต้ม | MAP-010, CONTRACT-010 | `src/live/**`, `tests/live/**` | เชื่อมอัตโนมัติหลังล็อกอิน เห็นผู้เล่นเข้า เดิน และออก รับผัง revision ใหม่ และโหลดสถานะล่าสุดเมื่อ reconnect |
 | ROOM-020 แก้ผังพื้นที่กลางด้วยสิทธิ์แอดมิน · Feature · 5 แต้ม | LIVE-020, CONTRACT-010 | `src/room-editor/**`, `src/assets/furniture/**`, `tests/room-editor/**` | แสดงโหมดแก้ผังให้แอดมิน ตรวจตำแหน่งและบันทึกด้วย revision ทุกคนเห็นผังใหม่หลังบันทึก และร่างยังอยู่เมื่อบันทึกล้มเหลว |

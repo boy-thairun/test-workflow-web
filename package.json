@@ -1,0 +1,25 @@
+{
+  "name": "test-workflow-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host localhost --strictPort",
+    "build": "vite build",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "@types/node": "24.10.1",
+    "eslint": "9.39.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.4",
+    "vite": "7.3.8",
+    "vitest": "3.2.7"
+  },
+  "dependencies": {
+    "@test-workflow/virtual-room-contracts": "file:src/auth/contracts/test-workflow-virtual-room-contracts-1.0.0.tgz"
+  }
+}
